@@ -10,5 +10,5 @@ spring:
     hibernate:
       ddl-auto: update  # 如果是mysql必须配，否则不会建表，如果是h2可以不必须 ， Defaults to \"create-drop\" when using an embedded database and no schema manager was detect
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss # todo 为什么不管用
     time-zone: GMT+8

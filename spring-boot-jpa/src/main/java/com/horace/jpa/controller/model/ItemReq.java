@@ -38,8 +38,16 @@ public class ItemReq {
 
     private Integer status;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") //todo 为什么不管用
     private LocalDateTime upTime;
 
     private LocalDateTime downTime;
+
+    private LocalDateTime createTime;
+
+    private String createBy;
+
+    private LocalDateTime updateTime;
+
+    private String updateBy;
 }

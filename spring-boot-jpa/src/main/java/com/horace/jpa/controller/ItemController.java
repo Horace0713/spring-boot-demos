@@ -24,12 +24,12 @@ public class ItemController {
         return service.create(req);
     }
 
-    @GetMapping("item/find/{id}")
+    @GetMapping("/item/find/{id}")
     public ItemReq find(@PathVariable(required = true) Long id) {
         return service.findById(id);
     }
 
-    @GetMapping("item/findAll")
+    @GetMapping("/item/findAll")
     public List<ItemReq> findAll() {
         return service.findAll();
     }

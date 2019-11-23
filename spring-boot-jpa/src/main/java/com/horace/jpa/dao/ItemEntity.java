@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -21,6 +26,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class ItemEntity {
 
     @Id
@@ -60,5 +66,17 @@ public class ItemEntity {
 //    //@Column(columnDefinition = " COMMENT '下架时间'")
 //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  这个注解没有起作用
     private LocalDateTime downTime;
+
+    @CreatedDate
+    private LocalDateTime createTime;
+
+    @CreatedBy
+    private String createBy;
+
+    @LastModifiedDate
+    private LocalDateTime updateTime;
+
+    @LastModifiedBy
+    private String updateBy;
 
 }
