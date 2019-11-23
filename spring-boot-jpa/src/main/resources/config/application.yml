@@ -1,2 +1,14 @@
 server:
   port: 8000
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/taobao?useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai
+    username: root
+    password: '123'
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update  # 如果是mysql必须配，否则不会建表，如果是h2可以不必须 ， Defaults to \"create-drop\" when using an embedded database and no schema manager was detect
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
