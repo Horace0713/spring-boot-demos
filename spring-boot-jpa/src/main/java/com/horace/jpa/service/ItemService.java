@@ -1,10 +1,13 @@
 package com.horace.jpa.service;
 
 import com.horace.jpa.controller.model.ItemReq;
+import com.horace.jpa.controller.model.PageResp;
 import com.horace.jpa.dao.ItemEntity;
 import com.horace.jpa.dao.ItemRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -62,5 +65,22 @@ public class ItemService {
                     BeanUtils.copyProperties(e, itemReq);
                     return itemReq;
                 }).collect(Collectors.toList());
+    }
+
+    public PageResp<ItemReq> findPage(int page, int size) {
+        Page<ItemEntity> entityPage = repository.findAll(PageRequest.of(page, size));
+        List<ItemReq> itemReqList = entityPage.getContent().stream()
+                .map(e -> {
+                    ItemReq itemReq = new ItemReq();
+                    BeanUtils.copyProperties(e, itemReq);
+                    return itemReq;
+                }).collect(Collectors.toList());
+
+        PageResp<ItemReq> pageResp = new PageResp<ItemReq>(); //todo  为什么不能用builder
+        pageResp.setPage(entityPage.getPageable().getPageNumber());
+        pageResp.setTotalNum(entityPage.getTotalElements());
+        pageResp.setTotalPage(entityPage.getTotalPages());
+        pageResp.setT(itemReqList);
+        return pageResp;
     }
 }
