@@ -7,7 +7,9 @@ import com.horace.jpa.dao.ItemRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -69,12 +71,7 @@ public class ItemService {
 
     public PageResp<ItemReq> findPage(int page, int size) {
         Page<ItemEntity> entityPage = repository.findAll(PageRequest.of(page, size));
-        List<ItemReq> itemReqList = entityPage.getContent().stream()
-                .map(e -> {
-                    ItemReq itemReq = new ItemReq();
-                    BeanUtils.copyProperties(e, itemReq);
-                    return itemReq;
-                }).collect(Collectors.toList());
+        List<ItemReq> itemReqList = copyEntitysToDtos(entityPage);
 
         PageResp<ItemReq> pageResp = new PageResp<ItemReq>(); //todo  为什么不能用builder
         pageResp.setPage(entityPage.getPageable().getPageNumber());
@@ -82,5 +79,20 @@ public class ItemService {
         pageResp.setTotalPage(entityPage.getTotalPages());
         pageResp.setContent(itemReqList);
         return pageResp;
+    }
+
+    public Page<ItemReq> findPage(Pageable pageable) {
+        Page<ItemEntity> entityPage = repository.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
+        List<ItemReq> itemReqList = copyEntitysToDtos(entityPage);
+        return new PageImpl(itemReqList, entityPage.getPageable(), entityPage.getTotalElements());
+    }
+
+    private List<ItemReq> copyEntitysToDtos(Page<ItemEntity> entityPage) {
+        return entityPage.getContent().stream()
+                .map(e -> {
+                    ItemReq itemReq = new ItemReq();
+                    BeanUtils.copyProperties(e, itemReq);
+                    return itemReq;
+                }).collect(Collectors.toList());
     }
 }

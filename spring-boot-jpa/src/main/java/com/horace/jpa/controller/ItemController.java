@@ -4,6 +4,9 @@ import com.horace.jpa.controller.model.ItemReq;
 import com.horace.jpa.controller.model.PageResp;
 import com.horace.jpa.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Max;
@@ -37,7 +40,7 @@ public class ItemController {
     }
 
     /**
-     * 无条件分页  用PagingAndSortingRepository
+     * 第1种 无条件分页  用PagingAndSortingRepository
      * @param page
      * @param size
      * @return
@@ -48,6 +51,16 @@ public class ItemController {
                                       @Max(3)//todo 不管用 如何限制大小
                                               int size) {
         return service.findPage(page, size);
+    }
+
+    /**
+     * 第2种 无条件分页  用PagingAndSortingRepository
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/item/findPage2")
+    public Page<ItemReq> findPage(@PageableDefault Pageable pageable) {
+        return service.findPage(pageable);
     }
 
     /**
