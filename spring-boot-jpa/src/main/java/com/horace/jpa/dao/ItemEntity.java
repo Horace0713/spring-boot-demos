@@ -21,7 +21,8 @@ import java.time.LocalDateTime;
  * @project: spring-boot-demos
  * @create: 2019-11-22 21:39
  */
-@Entity(name = "tb_item")
+@Entity
+@Table(name = "tb_item")
 @Data
 @Builder
 @NoArgsConstructor

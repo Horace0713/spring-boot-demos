@@ -95,4 +95,16 @@ public class ItemService {
                     return itemReq;
                 }).collect(Collectors.toList());
     }
+
+    public Page<ItemReq> findPageByTitle(String title, Pageable pageable) {
+        Page<ItemEntity> entityPage = repository.findByTitle(title, pageable);
+        List<ItemReq> itemReqs = copyEntitysToDtos(entityPage);
+        return new PageImpl(itemReqs, entityPage.getPageable(), entityPage.getTotalElements());
+    }
+
+    public Page<ItemReq> findPageByExam(Pageable page) {
+        Page<ItemEntity> entityPage = repository.findAll(null, page);
+        List<ItemReq> itemReqs = copyEntitysToDtos(entityPage);
+        return new PageImpl(itemReqs, entityPage.getPageable(), entityPage.getTotalElements());
+    }
 }

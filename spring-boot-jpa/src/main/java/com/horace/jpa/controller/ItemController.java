@@ -41,6 +41,7 @@ public class ItemController {
 
     /**
      * 第1种 无条件分页  用PagingAndSortingRepository
+     *
      * @param page
      * @param size
      * @return
@@ -55,6 +56,7 @@ public class ItemController {
 
     /**
      * 第2种 无条件分页  用PagingAndSortingRepository
+     *
      * @param pageable
      * @return
      */
@@ -64,7 +66,22 @@ public class ItemController {
     }
 
     /**
-     * 有条件分页 用 QueryByExampleExecutor
+     * 第1种 有条件分页  根据某一个条件分页
+     * @param pageable
+     * @param title
+     * @return
+     */
+    @GetMapping("/item/findPageByTitle")
+    public Page<ItemReq> findPageByTitle(@PageableDefault Pageable pageable, String title){
+        return service.findPageByTitle(title,pageable);
+    }
+
+    /**
+     * 第1种 有条件分页 用 QueryByExampleExecutor
+     */
+
+    /**
+     * 第2种 有条件分页 用 JpaSpecificationExecutor<T>
      */
 
 }
