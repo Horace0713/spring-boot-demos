@@ -80,7 +80,7 @@ public class ItemService {
         pageResp.setPage(entityPage.getPageable().getPageNumber());
         pageResp.setTotalNum(entityPage.getTotalElements());
         pageResp.setTotalPage(entityPage.getTotalPages());
-        pageResp.setT(itemReqList);
+        pageResp.setContent(itemReqList);
         return pageResp;
     }
 }

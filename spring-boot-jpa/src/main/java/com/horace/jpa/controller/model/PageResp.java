@@ -1,9 +1,7 @@
 package com.horace.jpa.controller.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -21,5 +19,6 @@ public class PageResp<T> {
     private int page;
     private int totalPage;
     private Long totalNum;
-    private List<T> t;
+    private List<T> content;
+//    private Pageable pageable; //如果能返回这个，很省事
 }

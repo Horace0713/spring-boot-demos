@@ -43,8 +43,8 @@ public class ItemController {
      * @return
      */
     @GetMapping("/item/findPage")
-    public PageResp<ItemReq> findPage(@RequestParam(name = "page", defaultValue = "0") int page,
-                                      @RequestParam(name = "size", defaultValue = "2")
+    public PageResp<ItemReq> findPage(@RequestParam(name = "page", defaultValue = "0", required = false) int page,
+                                      @RequestParam(name = "size", defaultValue = "2", required = false)
                                       @Max(3)//todo 不管用 如何限制大小
                                               int size) {
         return service.findPage(page, size);
