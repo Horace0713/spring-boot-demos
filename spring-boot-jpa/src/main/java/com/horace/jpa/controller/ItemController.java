@@ -1,5 +1,6 @@
 package com.horace.jpa.controller;
 
+import com.horace.jpa.controller.model.ItemPageReq;
 import com.horace.jpa.controller.model.ItemReq;
 import com.horace.jpa.controller.model.PageResp;
 import com.horace.jpa.service.ItemService;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import java.util.List;
 
@@ -67,13 +69,14 @@ public class ItemController {
 
     /**
      * 第1种 有条件分页  根据某一个条件分页
+     *
      * @param pageable
      * @param title
      * @return
      */
     @GetMapping("/item/findPageByTitle")
-    public Page<ItemReq> findPageByTitle(@PageableDefault Pageable pageable, String title){
-        return service.findPageByTitle(title,pageable);
+    public Page<ItemReq> findPageByTitle(@PageableDefault Pageable pageable, String title) {
+        return service.findPageByTitle(title, pageable);
     }
 
     /**
@@ -83,5 +86,9 @@ public class ItemController {
     /**
      * 第2种 有条件分页 用 JpaSpecificationExecutor<T>
      */
+    @PostMapping("/item/findAllBySpec")
+    public Page<ItemReq> findAllBySpec(@RequestBody @Valid ItemPageReq req) {
+        return service.findAllBySpec(req);
+    }
 
 }

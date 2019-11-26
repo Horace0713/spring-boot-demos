@@ -1,20 +1,23 @@
 package com.horace.jpa.service;
 
+import com.horace.jpa.controller.model.ItemPageReq;
 import com.horace.jpa.controller.model.ItemReq;
 import com.horace.jpa.controller.model.PageResp;
 import com.horace.jpa.dao.ItemEntity;
 import com.horace.jpa.dao.ItemRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -102,8 +105,28 @@ public class ItemService {
         return new PageImpl(itemReqs, entityPage.getPageable(), entityPage.getTotalElements());
     }
 
-    public Page<ItemReq> findPageByExam(Pageable page) {
-        Page<ItemEntity> entityPage = repository.findAll(null, page);
+//    public Page<ItemReq> findPageByExam(Pageable page) {
+//        Page<ItemEntity> entityPage = repository.findAll(null, page);
+//        List<ItemReq> itemReqs = copyEntitysToDtos(entityPage);
+//        return new PageImpl(itemReqs, entityPage.getPageable(), entityPage.getTotalElements());
+//    }
+
+    public Page<ItemReq> findAllBySpec(ItemPageReq req) {
+        Specification<ItemEntity> specification = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (StringUtils.hasText(req.getTitle())) {
+                Predicate p = criteriaBuilder.equal(root.get("title").as(String.class), req.getTitle());
+                predicates.add(p);
+            }
+            if (StringUtils.hasText(req.getBarcode())) {
+                Predicate p = criteriaBuilder.equal(root.get("barcode").as(String.class), req.getBarcode());
+                predicates.add(p);
+            }
+            return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
+        };
+
+        Sort sort = new Sort(Sort.Direction.ASC, "createTime");
+        Page<ItemEntity> entityPage = repository.findAll(specification, PageRequest.of(req.getPage(), req.getPageSize(), sort));
         List<ItemReq> itemReqs = copyEntitysToDtos(entityPage);
         return new PageImpl(itemReqs, entityPage.getPageable(), entityPage.getTotalElements());
     }
