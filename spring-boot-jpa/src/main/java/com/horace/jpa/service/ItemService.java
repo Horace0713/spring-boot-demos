@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -112,22 +115,45 @@ public class ItemService {
 //    }
 
     public Page<ItemReq> findAllBySpec(ItemPageReq req) {
-        Specification<ItemEntity> specification = (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new ArrayList<>();
-            if (StringUtils.hasText(req.getTitle())) {
-                Predicate p = criteriaBuilder.equal(root.get("title").as(String.class), req.getTitle());
-                predicates.add(p);
-            }
-            if (StringUtils.hasText(req.getBarcode())) {
-                Predicate p = criteriaBuilder.equal(root.get("barcode").as(String.class), req.getBarcode());
-                predicates.add(p);
-            }
-            return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
-        };
+//        Specification<ItemEntity> specification = (root, query, criteriaBuilder) -> {
+//            List<Predicate> predicates = new ArrayList<>();
+//            if (StringUtils.hasText(req.getTitle())) {
+//                Predicate p = criteriaBuilder.equal(root.get("title").as(String.class), req.getTitle());
+//                predicates.add(p);
+//            }
+//            if (StringUtils.hasText(req.getBarcode())) {
+//                Predicate p = criteriaBuilder.equal(root.get("barcode").as(String.class), req.getBarcode());
+//                predicates.add(p);
+//            }
+//            return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
+//        };
 
         Sort sort = new Sort(Sort.Direction.ASC, "createTime");
-        Page<ItemEntity> entityPage = repository.findAll(specification, PageRequest.of(req.getPage(), req.getPageSize(), sort));
+        Page<ItemEntity> entityPage = repository.findAll(specification(req), PageRequest.of(req.getPage(), req.getPageSize(), sort));
         List<ItemReq> itemReqs = copyEntitysToDtos(entityPage);
         return new PageImpl(itemReqs, entityPage.getPageable(), entityPage.getTotalElements());
+    }
+
+    private Specification<ItemEntity> specification(ItemPageReq req) {
+        return new Specification<ItemEntity>() {
+            @Override
+            public Predicate toPredicate(Root<ItemEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (StringUtils.hasText(req.getTitle())) {
+                    Predicate p = criteriaBuilder.equal(root.get("title").as(String.class), req.getTitle());
+                    predicates.add(p);
+                }
+                if (StringUtils.hasText(req.getBarcode())) {
+                    Predicate p = criteriaBuilder.equal(root.get("barcode").as(String.class), req.getBarcode());
+                    predicates.add(p);
+                }
+                if (StringUtils.hasText(req.getSellPoint())) { //todo 有问题
+                    criteriaBuilder.like(root.get("sellPoint").as(String.class), "%" + req.getSellPoint() + "%");
+                }
+                //todo 补充时间
+                Predicate[] p = predicates.toArray(new Predicate[predicates.size()]);
+                return criteriaBuilder.and(p);
+            }
+        };
     }
 }
