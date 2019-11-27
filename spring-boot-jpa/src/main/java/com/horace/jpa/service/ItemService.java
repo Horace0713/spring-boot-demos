@@ -20,6 +20,7 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -128,7 +129,7 @@ public class ItemService {
 //            return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
 //        };
 
-        Sort sort = new Sort(Sort.Direction.ASC, "createTime");
+        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
         Page<ItemEntity> entityPage = repository.findAll(specification(req), PageRequest.of(req.getPage(), req.getPageSize(), sort));
         List<ItemReq> itemReqs = copyEntitysToDtos(entityPage);
         return new PageImpl(itemReqs, entityPage.getPageable(), entityPage.getTotalElements());
@@ -136,6 +137,10 @@ public class ItemService {
 
     private Specification<ItemEntity> specification(ItemPageReq req) {
         return new Specification<ItemEntity>() {
+            /*
+            Criteria 查询  标准查询的意思
+                 root是entitu，CriteriaQuery类似sql查询语句，CriteriaBuilder是build查询语句
+             */
             @Override
             public Predicate toPredicate(Root<ItemEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
@@ -144,15 +149,27 @@ public class ItemService {
                     predicates.add(p);
                 }
                 if (StringUtils.hasText(req.getBarcode())) {
-                    Predicate p = criteriaBuilder.equal(root.get("barcode").as(String.class), req.getBarcode());
-                    predicates.add(p);
+                    Predicate barcode = criteriaBuilder.equal(root.get("barcode").as(String.class), req.getBarcode());
+                    predicates.add(barcode);
                 }
-                if (StringUtils.hasText(req.getSellPoint())) { //todo 有问题
-                    criteriaBuilder.like(root.get("sellPoint").as(String.class), "%" + req.getSellPoint() + "%");
+                if (StringUtils.hasText(req.getSellPoint())) {
+                    Predicate sellPoint = criteriaBuilder.like(root.get("sellPoint").as(String.class), "%" + req.getSellPoint() + "%");
+                    predicates.add(sellPoint);
                 }
-                //todo 补充时间
+
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                if (StringUtils.hasText(req.getFromTime())) {
+                    Predicate createTime = criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(LocalDateTime.class), LocalDateTime.parse(req.getFromTime(), df));
+                    predicates.add(createTime);
+                }
+
+                if (StringUtils.hasText(req.getToTime())) {
+                    Predicate createTime = criteriaBuilder.lessThanOrEqualTo(root.get("createTime").as(LocalDateTime.class), LocalDateTime.parse(req.getToTime(), df));
+                    predicates.add(createTime);
+                }
                 Predicate[] p = predicates.toArray(new Predicate[predicates.size()]);
-                return criteriaBuilder.and(p);
+                return query.where(p).getRestriction();
+//                return criteriaBuilder.and(p); //跟上面的效果一样
             }
         };
     }
