@@ -16,9 +16,17 @@
             <artifactId>lombok</artifactId>
             <version>1.18.2</version>
         </dependency>
+        <!-- ConfigurationProperties 必须有的文件-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- 配置自定义的配置文件，有提示-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>
