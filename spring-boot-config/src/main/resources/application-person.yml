@@ -36,3 +36,8 @@ person:
     age: 12
   shuangyinhao: "双引号转义，\n是回车" # 双引号会转移，\n是回车
   danyinhao: '单引号不转义，\n是\n'  # 单引号不转义，\n是\n，所以用单引号安全
+  bigStr: qwertyuiopasdf
+   ghjklzxcvbnm # 默认不使用引号,字符串可以写成多行，从第二行开始，必须有一个单空格缩进。换行符会被转为空格。
+--- #多个文档用 - - - 隔开
+server:
+  port: 8082

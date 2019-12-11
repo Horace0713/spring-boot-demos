@@ -36,6 +36,8 @@ public class PersonConfig {
 
     private String danyinhao;
 
+    private String bigStr;
+
     private Map<String, Object> maps;
 
     private Map<String, Object> maps2;
