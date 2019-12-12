@@ -1,0 +1,43 @@
+
+
+
+
+
+person:
+  last-name: hello  # 对象不用‘-’，跟Map一样
+  age: 18
+  boss: false
+  birth: 2017/12/12   # 自动转成Date，但转LocalDateTime，LocalDate，会报错
+  maps:
+    k1: v1  # Map不用‘-’
+    k2: v2
+  maps2: {k1: v1,k2: 12}
+  lists:
+  - lisi # List必须用‘-’，一个‘-’表示一个引用类型的开始
+  - zhaoliu
+  dogList:
+  - name: 小黑
+    age: 1
+  - name: 小白
+    age: 2
+  dogMap:
+    yinguo:  # Map不用‘-’
+    - name: 小英1 # List必须用‘-’，一个‘-’表示一个引用类型的开始
+      age: 1
+    - name: 小英2
+      age: 2
+    meiguo:
+    - name: 小美1
+      age: 1
+    - name: 小美2
+      age: 2
+  dog:
+    name: 小狗
+    age: 12
+  shuangyinhao: "双引号转义，\n是回车" # 双引号会转移，\n是回车
+  danyinhao: '单引号不转义，\n是\n'  # 单引号不转义，\n是\n，todo 所以用单引号比双引号安全
+  bigStr: qwertyuiopasdf
+    ghjklzxcvbnm # 默认不使用引号,字符串可以写成多行，从第二行开始，必须有一个单空格缩进。换行符会被转为空格。
+--- #多个文档用 - - - 隔开
+server:
+  port: 8082
