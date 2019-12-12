@@ -47,6 +47,9 @@ public class ConfigTest {
         assertThat(config.getDanyinhao()).doesNotContain("\n");
         assertThat(config.getDanyinhao()).contains("\\n");
         assertThat(config.getEmail()).isNotNull();
+        assertThat(config.getMoney()).isNotNull();
+        assertThat(config.getDogList().get(0).getName()).startsWith("wenwen");
+        assertThat(config.getVersion()).startsWith("1.8");
     }
 
     @Test

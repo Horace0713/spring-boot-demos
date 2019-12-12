@@ -37,9 +37,13 @@ public class PersonConfig {
 
     private Integer age;
 
+    private Integer money;
+
     private Boolean boss;
 
     private Date birth;
+
+    private String version;
 
     @NotBlank(message = "邮箱不能为空")
     @Email(message = "邮箱格式不正确")
