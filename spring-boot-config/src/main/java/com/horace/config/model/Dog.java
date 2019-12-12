@@ -1,4 +1,4 @@
-package com.horace.config;
+package com.horace.config.model;
 
 import lombok.Data;
 

@@ -1,5 +1,7 @@
 package com.horace.config;
 
+import com.horace.config.config.PersonConfig;
+import com.horace.config.config.PersonValue;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
