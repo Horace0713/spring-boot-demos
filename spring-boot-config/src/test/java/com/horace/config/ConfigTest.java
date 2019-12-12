@@ -43,5 +43,6 @@ public class ConfigTest {
         assertThat(config.getShuangyinhao()).contains("\n");
         assertThat(config.getDanyinhao()).doesNotContain("\n");
         assertThat(config.getDanyinhao()).contains("\\n");
+        assertThat(config.getEmail()).isNotNull();
     }
 }
