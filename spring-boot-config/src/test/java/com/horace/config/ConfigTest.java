@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
@@ -27,22 +28,31 @@ public class ConfigTest {
     private PersonValue personValue;
     @Autowired
     private PersonConfig config;
+    @Autowired
+    private ApplicationContext ioc;
 
     @Test
-    public void personValue(){
+    public void personValue() {
         Assert.assertNotNull(personValue.getLastName());
         Assert.assertNotNull(personValue.getAge());
-        Assert.assertEquals(personValue.getBoss(),true);
+        Assert.assertEquals(personValue.getBoss(), true);
         assertThat(personValue.getAge()).isEqualTo(20);
     }
 
     @Test
-    public void personConfig(){
+    public void personConfig() {
         assertThat(config.getAge()).isEqualTo(18);
         assertThat(config.getLists().size()).isEqualTo(2);
         assertThat(config.getShuangyinhao()).contains("\n");
         assertThat(config.getDanyinhao()).doesNotContain("\n");
         assertThat(config.getDanyinhao()).contains("\\n");
         assertThat(config.getEmail()).isNotNull();
+    }
+
+    @Test
+    public void beanConfig() {
+       assertThat(ioc.containsBean("hello")).isTrue(); // 默认方法名就是id
+       assertThat(ioc.containsBean("helloworld")).isFalse();
+       assertThat(ioc.containsBean("helloService")).isFalse();
     }
 }
