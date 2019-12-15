@@ -1,0 +1,6 @@
+spring:
+  security:
+    user:
+      name: admin
+      password: admin # 如果有了基于内存的认证，则此处配置不生效
+      roles: admin
