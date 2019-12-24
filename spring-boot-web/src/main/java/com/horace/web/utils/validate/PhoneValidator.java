@@ -17,7 +17,7 @@ public class PhoneValidator implements ConstraintValidator<PhoneCheck, String> {
     private boolean require = false;
 
     /**
-     * Initializes the validator in preparation for
+     * Initializes the validator in preparation for  校验前的初始化工作
      * {@link #isValid(Object, ConstraintValidatorContext)} calls.
      * The constraint annotation for a given constraint declaration
      * is passed.
@@ -35,7 +35,7 @@ public class PhoneValidator implements ConstraintValidator<PhoneCheck, String> {
     }
 
     /**
-     * Implements the validation logic.
+     * Implements the validation logic.  具体的校验逻辑
      * The state of {@code value} must not be altered.
      * <p>
      * This method can be accessed concurrently, thread-safety must be ensured
@@ -54,6 +54,10 @@ public class PhoneValidator implements ConstraintValidator<PhoneCheck, String> {
             if (StringUtils.isEmpty(s)) {
                 return true;
             } else {
+                //禁止默认消息返回
+                context.disableDefaultConstraintViolation();
+                //自定义返回消息
+                context.buildConstraintViolationWithTemplate("手机号 格式不正确").addConstraintViolation();
                 return ValidatorUtils.isMobile(s);
             }
         }

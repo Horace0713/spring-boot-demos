@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -36,6 +37,7 @@ public class Book {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") //转成特定的格式给前端
     private LocalDateTime pubTime;
 
+    @NotBlank(message = "手机号 不能为空")
     @PhoneCheck
     private String phone;
 }

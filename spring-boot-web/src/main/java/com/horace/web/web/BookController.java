@@ -29,11 +29,11 @@ public class BookController {
                 .build();
     }
 
-    @ExceptionHandler
-    @ResponseStatus()
-    ResponseEntity<String> methodArgumentNotValidException(MethodArgumentNotValidException e) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
-    }
+//    @ExceptionHandler
+//    @ResponseStatus()
+//    ResponseEntity<String> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+//        return ResponseEntity
+//                .status(HttpStatus.BAD_REQUEST)
+//                .body(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+//    }
 }
