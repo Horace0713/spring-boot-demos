@@ -12,9 +12,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author: Horace
@@ -33,11 +34,11 @@ public class Book {
     // 这时可以对规则分组，在校验时指定分组 ,但如果指定了分组，使用时未指定分组，则指定了分组的校验不生效，只有未指定分组的生效
     private String name;
 
-    @NotBlank(message = "作者不能为空", groups = Group2.class)
+    @NotBlank(message = "作者不能为空")
     private String author;
 
-    @NotBlank(message = "ISBN 不能为空")
-    private String ISBN;
+    @NotBlank(message = "ibsn 不能为空")
+    private String ibsn;
 
     @JsonIgnore  //转json忽略该值
     private BigDecimal price;
@@ -45,7 +46,21 @@ public class Book {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") //转成特定的格式给前端
     private LocalDateTime pubTime;
 
-    @NotBlank(message = "手机号 不能为空", groups = Group1.class)
+    @NotBlank(message = "手机号 不能为空")
     @PhoneCheck(groups = Group2.class)
     private String phone;
+
+//    @Digits(integer = 100, fraction = 2)
+    @Max(2000)
+    @Min(1)
+    private String totalPage;//总页数
+
+    @Future(message = "上架时间 不能早于现在") //被注解的元素必须是一个未来或当前的时间
+    private Date upTime;
+
+    @FutureOrPresent(message = "下架时间不能早于现在") //被注解的元素必须是一个未来或当前的时间，适用于java.time包下的时间类+Date+Calender
+    private LocalDateTime downTime;
+
+    @PastOrPresent(message = " 写书时间必须是过去时间")
+    private LocalDateTime writeTime;
 }
