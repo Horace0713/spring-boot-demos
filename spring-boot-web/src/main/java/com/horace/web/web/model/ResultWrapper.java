@@ -3,6 +3,7 @@ package com.horace.web.web.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @author Horace
@@ -11,6 +12,7 @@ import lombok.Data;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ToString(callSuper = true)
 public class ResultWrapper {
     private final Status status;
     private final String errorCode;
