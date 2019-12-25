@@ -1,10 +1,12 @@
 package com.horace.web.web;
 
+import com.horace.web.utils.validate.groups.Group1;
 import com.horace.web.web.model.Book;
 import com.horace.web.web.model.ResultWrapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 public class BookController {
 
     @PostMapping("/book")
-    public ResultWrapper book(@RequestBody @Valid Book book, BindingResult result) {
+    public ResultWrapper book(@RequestBody @Validated(value = Group1.class) Book book, BindingResult result) {
         if (result.hasErrors()) {
             List<String> errors = result.getAllErrors().stream()
                     .map((e) -> e.getDefaultMessage()).collect(Collectors.toList());
