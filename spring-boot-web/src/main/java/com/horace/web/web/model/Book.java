@@ -27,8 +27,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Book {
 
+    @NotBlank(message = "名字不能为空")
     private String name;
 
+    @NotBlank(message = "作者不能为空")
     private String author;
 
     @JsonIgnore  //转json忽略该值

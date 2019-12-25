@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -27,7 +28,7 @@ public class ItemReq {
     private Long id;
 
     private String title;
-
+    @NotBlank(message = "卖点不能为空")
     private String sellPoint;
 
     @JsonIgnore  //转json忽略这个字段
