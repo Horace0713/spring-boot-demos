@@ -33,7 +33,7 @@ public class MyInterceptor implements HandlerInterceptor {
                 .errorCode(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                 .data("请求错误")
                 .build();
-        response.getWriter().write(resultWrapper.toString());
+//        response.getWriter().write(resultWrapper.toString());
         return true;//preHandlef返回true，后面的方法才会执行,如果返回false，并且response没有丢数据，那么调用方只能收到200，没有body
     }
 
