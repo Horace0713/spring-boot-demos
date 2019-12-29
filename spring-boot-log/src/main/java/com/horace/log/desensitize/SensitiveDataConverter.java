@@ -4,6 +4,7 @@ import ch.qos.logback.classic.pattern.MessageConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +16,10 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 public class SensitiveDataConverter extends MessageConverter {
+
+
+    private List<LogMask> logMasks; //todo 如何init
+
 
     private static final String MOBILE_REGEX = "((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}";
 
@@ -38,6 +43,7 @@ public class SensitiveDataConverter extends MessageConverter {
 
         String tempMsg = oriMsg;
         if (tempMsg != null && !"".equals(tempMsg)) {
+            //todo 如何高效判断出日志中是否有脱敏字段，并且对其脱敏
             if (tempMsg.length() == 11) {
                 tempMsg = oriMsg.substring(0, 3) + "****" + oriMsg.substring(7, oriMsg.length());
             }
