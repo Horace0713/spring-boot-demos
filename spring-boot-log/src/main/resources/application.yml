@@ -1,0 +1,7 @@
+logging:
+  #  level: debug # 不能这么配
+  level:
+    com.horace.a.*: info
+    com.horace.b.*: debug
+  file: my.log  # 日志文件保存路径
+
