@@ -3,6 +3,7 @@ logging:
   level:
     com.horace.a.*: info
     com.horace.b.*: debug
+    com.horace.service.*: trace
   file: my.log  # 日志文件保存路径
   config: classpath:logback.xml
 

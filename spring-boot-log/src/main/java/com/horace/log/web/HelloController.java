@@ -2,7 +2,7 @@ package com.horace.log.web;
 
 import com.horace.log.a.A;
 import com.horace.log.b.B;
-import com.horace.log.mobile.MobileService;
+import com.horace.log.service.MobileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
