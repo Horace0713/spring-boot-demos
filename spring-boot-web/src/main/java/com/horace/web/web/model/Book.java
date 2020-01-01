@@ -43,7 +43,7 @@ public class Book {
     @JsonIgnore  //转json忽略该值
     private BigDecimal price;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") //转成特定的格式给前端
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") //转成特定的格式给前端 // 管用  默认用MappingJackson2HttpMessageConverter转Json
     private LocalDateTime pubTime;
 
     @NotBlank(message = "手机号 不能为空")
