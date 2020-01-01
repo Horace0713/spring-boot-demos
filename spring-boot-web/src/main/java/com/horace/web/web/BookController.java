@@ -1,9 +1,11 @@
 package com.horace.web.web;
 
+import com.horace.web.service.BookServce;
 import com.horace.web.utils.validate.groups.Group1;
 import com.horace.web.web.model.Book;
 import com.horace.web.web.model.ResultWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -11,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin2.applet.context.NoopExecutionContext;
 import sun.util.calendar.LocalGregorianCalendar;
 
 import javax.validation.Valid;
@@ -30,6 +33,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BookController {
 
+    @Autowired
+    private BookServce bookServce;
+
     @PostMapping("/book")
     public ResultWrapper book(@RequestBody @Validated Book book, BindingResult result) {
         if (result.hasErrors()) {
@@ -41,6 +47,7 @@ public class BookController {
                     .data(errors)
                     .build();
         }
+        bookServce.book();
 
         return success(Book.builder()
                 .author("刘慈欣")
