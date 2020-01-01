@@ -1,0 +1,14 @@
+#  静态资源默认位置在ResourceProperties中
+#  ResourceProperties
+#
+#    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+#    "classpath:/META-INF/resources/", "classpath:/resources/",
+#    "classpath:/static/", "classpath:/public/" };
+
+
+
+spring:
+  mvc:
+    static-path-pattern: /static/**   # 过滤规则
+  resources:
+    static-locations: /static/ #静态资源位置
