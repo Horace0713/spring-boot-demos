@@ -26,6 +26,7 @@
         <module>spring-batch</module>
         <module>spring-boot-retry</module>
         <module>spring-boot-log</module>
+        <module>spring-boot-test</module>
     </modules>
 
     <properties>
@@ -44,6 +45,12 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
             <version>1.4.199</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
         </dependency>
     </dependencies>
 
