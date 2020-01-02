@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -23,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author: Horace
- * @desc:
+ * @desc:  MockMvc 测试方式
  * @project: spring-boot-demos
  * @create: 2020-01-02 21:00
  */
@@ -32,12 +31,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HelloControllerTest {
 
     @Autowired
-    private WebApplicationContext wac;
+    private WebApplicationContext wac; //注入一个 WebApplicationContext 用来模拟 ServletContext 环境。
 
     private MockMvc mockMvc;
 
     @Before
     public void before() {
+        //在每个测试方法执行前进行 MockMvc 的初始化操作
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
