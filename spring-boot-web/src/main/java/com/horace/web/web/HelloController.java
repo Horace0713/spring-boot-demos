@@ -1,5 +1,6 @@
 package com.horace.web.web;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2019-11-21 22:16
  */
 @RestController
+@Slf4j
 public class HelloController {
 
     @GetMapping("/hello")
     public String hello() {
+        log.info("hello");
         return "hello world";
     }
 }
