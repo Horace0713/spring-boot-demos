@@ -38,7 +38,8 @@ public class SignService {
     public void signContract() throws InterruptedException {
         count++;
         log.info("这是第" + count + "次运行方法,");
-
+        //todo  加入日志追踪（TxId）后，貌似自定义的异步线程池没起作用，使用默认的线程池，因为日志是signContract方法 当前线程是 SimpleAsyncTaskExecutor-1
+        // todo  而加入之前是signContract方法 当前线程是 async-t-1
         log.info("signContract方法 当前线程是 " + Thread.currentThread().getName());
         Thread.sleep(5000);
         this.restTemplate.setErrorHandler(responseErrorHandler(new HelloException()));
