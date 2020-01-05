@@ -7,10 +7,10 @@
 
 server:
   port: 9080
-  servlet.context-path: /web/rest
+  servlet.context-path: /web/rest  # 给gateway按路径转发，否则不好转发
 spring:
   application:
-    name: spring-boot-web
+    name: spring-boot-web  # 注册到eureka必须配，否则服务没名字
   mvc:
     static-path-pattern: /static/**   # 过滤规则
   resources:
