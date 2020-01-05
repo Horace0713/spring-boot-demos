@@ -6,7 +6,8 @@
 #    "classpath:/static/", "classpath:/public/" };
 
 server:
-  port: 6081
+  port: 9080
+  servlet.context-path: /web/rest
 spring:
   application:
     name: spring-boot-web
