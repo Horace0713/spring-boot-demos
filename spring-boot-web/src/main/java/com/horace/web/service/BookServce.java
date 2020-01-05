@@ -1,10 +1,11 @@
 package com.horace.web.service;
 
-import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Map;
 
 /**
  * @author: Horace
@@ -17,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 public class BookServce {
 
     @Autowired
-    private RestTemplate restTemplate ;
+    private RestTemplate restTemplate;
 
     public String book() {
         log.info(this.getClass().getSimpleName() + "book");
@@ -36,6 +37,11 @@ public class BookServce {
          * 6. todo accesslog 在tomcat中配，带上TxId
          */
         String result = restTemplate.getForObject("http://SPRING-BOOT-JPA/jpa/rest/hello", String.class);
+        return result;
+    }
+
+    public Map retry() {
+        Map result = restTemplate.postForObject("http://SPRING-BOOT-RETRY/retry/rest/sign", null, Map.class);
         return result;
     }
 }

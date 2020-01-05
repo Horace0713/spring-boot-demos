@@ -1,0 +1,13 @@
+server:
+  port: 9082
+  servlet.context-path: /retry/rest  # 给gateway按路径转发，否则不好转发
+spring:
+  application:
+    name: spring-boot-retry  # 注册到eureka必须配，否则服务没名字
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    region: default
+    registryFetchIntervalSeconds: 5
+    serviceUrl.defaultZone: http://localhost:8761/eureka/

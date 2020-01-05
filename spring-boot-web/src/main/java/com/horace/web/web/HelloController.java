@@ -23,6 +23,7 @@ public class HelloController {
     public String hello() {
         log.info("hello");
         bookServce.jpa();
+        bookServce.retry();
         return "hello world";
     }
 }
