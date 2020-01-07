@@ -13,13 +13,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author: Horace
- * @desc: MockMvc 测试方式
+ * @desc: TestRestTemplate 测试方式 ，使用一个真实的 Servlet 环境而不是模拟
+ * 的 Servlet 环境
  * @project: spring-boot-demos
  * @create: 2020-01-02 21:00
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @RunWith(SpringRunner.class)
-public class HelloController2Test {
+public class TestRestTemplateTest {
+
+    /**
+     * 需要将＠Spring BootTest 注解中
+     * webEnvironment 属’性的默认值由 WebEnvironment.MOCK 修改为 WebEnvironment.DEFINED PORT
+     * 或者 WebEnvironment.RANDOM PORT
+     */
 
     @Autowired
     TestRestTemplate testRestTemplate;

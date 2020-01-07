@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class HelloControllerTest {
+public class MockMvcTest {
 
     @Autowired
     private WebApplicationContext wac; //注入一个 WebApplicationContext 用来模拟 ServletContext 环境。
