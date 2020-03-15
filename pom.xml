@@ -27,6 +27,7 @@
         <module>spring-boot-retry</module>
         <module>spring-boot-log</module>
         <module>spring-boot-test</module>
+        <module>spring-boot-shiro</module>
     </modules>
 
     <properties>
